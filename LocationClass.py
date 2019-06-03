@@ -21,12 +21,19 @@ class Location:
         self.y=None
         self.z=None
         try:
-            d = len(x) #if x is a single real number this raises TypeError
+            d = len(x)  # if x is a single real number this raises TypeError
             self.x = x[0]
-            if d>=2: self.y = x[1]
-            if d>=3: self.z = x[2]
+            if d>=2:
+                self.y = x[1]
+                self.z = None
+            if d>=3:
+                self.z = x[2]
+
         except TypeError:
-            self.x=x; self.y=y; self.z=z
+            self.x=x
+            self.y=y
+            self.z=z
+
     def space(self):
         return np.array([v for v in [self.x,self.y,self.z] if v is not None])
     
