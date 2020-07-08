@@ -13,21 +13,14 @@ class Event(Location):
     used to see what had happened at this Event.
     """
     
-    def __init__(self,loc,phystype,descrip):
-        super().__init__(loc.t,loc.x,y=loc.y,z=loc.z)
+    def __init__(self,phystype,descrip,t,x,y=None,z=None):
+        super().__init__(t,x,y=y,z=z)
         self.descrip = descrip
         self.phystype = phystype
     
-    def is_visible(self,loc2,c=10):
-        """given a viewing space-time location, return the boolean 'light has had
-            time to travel from the Event to the viewer'"""
-        assert(self.dim()==loc2.dim())
-        spatial = self.length_to(loc2)
-        return ((loc2.t - self.t)*c >= spatial)
-    
-    def get_image(self):
+    def get_ghostimage(self):
         """Return an instance of the correct subtype of Physical which matches
         the description of this event. That Physical is a 'ghost': not
         registered with the Universe and has no Worldline"""
-        return self.phystype.decompress(self.descrip)
+        return self.phystype.decompress(self,self.descrip)
     

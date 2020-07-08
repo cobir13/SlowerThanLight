@@ -17,12 +17,13 @@ class Universe:
         self.worldline_counter = 0
         self.lightspeed = lightspeed
         self.radius = radius #radius of the universe
+        self.clock = 0 #a universal clock to use as a reference
     
     def increment(self,dt=1):
         """Perform a timestep of length dt of the universe. Move physical
             objects and delete Worldlines that have already been seen fully"""
+        self.clock += dt
         for line in self.History:
-            line.timer += dt
             line.prune()
         for thing in self.Physicals.values():
             thing.drift(dt)
